@@ -1,0 +1,388 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Préstamo de Equipos</title>
+  <link rel="stylesheet" href="./data/style.css">
+  <link rel="icon" href="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" type="image/x-icon">
+  <link rel="icon" href="ico.png">
+  <link rel="stylesheet" href="./data/dark-style.css"dark-mode-style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+
+  <script>
+    window.addEventListener('load', function () { const loading = document.getElementById('loading'); setTimeout(function () {loading.style.display = 'none';}, 1100);});
+  </script>
+  
+</head>
+
+<body class="cuerpo">
+    
+
+
+  <div id="loading">
+    <div class="custom-loader"></div>
+  </div>
+
+
+
+  <div class="container">
+    <div class="menu-container">
+    <div style="cursor:pointer"  ><img src="./data/minimizar.svg" id="minimizeBtn"  alt="Minimizar"></div>
+    <div  style="cursor:pointer"  ><img src="./data/salir.svg"  id="closeBtn" alt="salir" ></div>
+  </div>
+
+    <h1 class="title">Sistema de Prestamo de Equipos</h1>
+<!-- Agrega esto en tu HTML donde quieras mostrar el número de equipos prestados -->
+    <h2>Número de Equipos Prestados: <span id="totalEquiposPrestados"></span></h2>
+
+    <div id="notificacion" class="notificacion"></div>
+
+    <div class="tabs">
+      <button id="toggle-mode-btn" class="toggle-mode-btn"> <i class="fa-solid fa-cloud-moon"></i> </button>
+      <div class="tab-button active" data-tab="prestados">Prestamos</div>
+      <div class="tab-button" data-tab="entregados">Equipos Entregados</div>
+      <div class="tab-button" data-tab="eventos">Equipos</div>
+      <div class="tab-button" data-tab="personas">Personas</div>
+      <div id="historial_b" class="tab-button" data-tab="historial">Historial</div>
+    </div>
+
+
+      
+
+
+
+
+    <div id="prestados" class="tab-content" style="display: block;">
+      <h2 class="t-title">Equipos Prestados</h2>
+
+      <div class="search-container">
+        <input type="text" id="search-input"  placeholder="Buscar...">
+      </div>
+
+      <div class="prestar-btn">
+      <button class="prestar" id="openFormBtn" >PRESTAR</button>
+      </div>
+
+      <table id="prestados-table" class="data-table">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Ficha</th>
+            <th>Duracion</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody  class="data"></tbody>
+      </table>
+
+      <div class="fondo">
+        <div id="prestamoFormContainer" class="form-container">
+          <form id="prestamo-form">
+            <h5 class="t-title">MENU DE PRESTAMO</h5>
+            <div>
+              <label for="placa">PLACA</label>
+              <input type="text" id="placa" required placeholder="Serial, o Codigo del equipo">
+            </div>
+            <div>
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" placeholder="Nombre Del Usuario">
+            </div>
+            <div>
+              <label for="cedula">Cédula:</label>
+              <input type="text" id="cedula" required  placeholder="C.C o Tajeta de Identidad" >
+            </div>
+            <div>
+              <label for="equipo">Ficha </label>
+              <input type="text" id="equipo"placeholder='Si NO ES Aprendiz "NA"'>
+            </div>
+            <div class="accion-prestamo">
+              <button id="cancelFormBtn" type="button">SALIR</button>
+              <button type="submit">PRESTAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div id="entregados" class="tab-content">
+      <h2 class="t-title">Equipos Entregados</h2>
+
+      <div class="search-container">
+        <input type="text" id="search-input2" placeholder="Buscar...">
+      </div>
+
+      <button id="export-btn" class="export-btn" >Exportar a Excel</button>
+     
+            
+        <!-- Agrega estos elementos en tu archivo HTML -->
+        <div class="filtro">
+          <input type="date" id="filtroFecha"/>
+          <button id="filtrarPorFecha">Filtrar</button>
+        </div>
+        <div class="filtro">
+          <input type="time" id="filtroHora" />
+          <button id="filtrarPorHora">Filtrar</button>
+        </div>
+        <div class="filtro">
+          <input type="month" id="filtroMes" />
+          <button id="filtrarPorMes">Filtrar</button>
+        </div>
+        <div class="filtro">
+          <input type="number" id="filtroAnio" placeholder="AÑO" />
+          <button id="filtrarPorAnio">Filtrar</button>
+        </div>
+
+      
+      <table id="entregados-table" class="data-table">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Ficha</th>
+            <th>Duracion</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Fecha de Entrega</th>
+            <th>Hora de Entrega</th>
+          </tr>
+        </thead>
+        <tbody  class="data"></tbody>
+      </table>
+
+      <button id="borrarEntregados" class="btn-delete">Borrar tabla</button>
+    </div>
+
+
+
+
+    <div id="historial" class="tab-content">
+      <h2 class="t-title">Historial</h2>
+      <div class="search-container">
+        <input type="text" id="search-input3" placeholder="Buscar...">
+      </div>
+
+      <table id="historial-table" class="data-table">
+        <button id="consultar-btn" class="consultar-btn">Consultar almacenamiento</button>
+        <button id="export-btn-historial" class="export-btn-historial">Exportar a Excel</button>
+        <button id="export-btn-JSON-DB"class="export-btn-JSON-DB">JSON DB</button>
+
+            <!-- Agrega estos elementos en tu archivo HTML -->
+      <div class="filtro">
+        <input type="date" id="filtroFechaHistorial" />
+        <button id="filtrarPorFechaHistorial">Filtrar</button>
+      </div>
+
+      <div class="filtro">
+        <input type="time" id="filtroHoraHistorial" />
+        <button id="filtrarPorHoraHistorial">Filtrar</button>
+      </div>
+
+      <div class="filtro">
+        <input type="month" id="filtroMesHistorial" />
+        <button id="filtrarPorMesHistorial">Filtrar</button>
+      </div>
+
+      <div class="filtro">
+        <input type="number" id="filtroAnioHistorial" placeholder="AÑO" />
+        <button id="filtrarPorAnioHistorial">Filtrar</button>
+      </div>
+
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Ficha</th>
+            <th>Duracion</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Fecha de Entrega</th>
+            <th>Hora de Entrega</th>
+          </tr>
+        </thead>
+        <tbody  class="data"></tbody>
+      </table>
+      <button id="borrarHistorial" class="btn-delete">Borrar Historial</button>
+    </div>
+  </div>
+
+
+  <!--Eventos-->
+  <div id="eventos" class="tab-content">
+    <h2 class="t-title">Equipos</h2>
+    <div class="search-container">
+      <input type="text" id="search-input4" placeholder="Buscar...">
+    </div>
+    <table id="eventos-table" class="data-table">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Número de veces prestado</th>
+          <th>Personas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se agregarán las filas dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="search-container">
+        <input type="text" id="search-input5" placeholder="Buscar...">
+      </div>
+      <div id="personas-container"></div>
+    </div>
+  </div>
+  <!--Eventos-->
+
+
+
+
+
+
+  <!--Eventos-Persona-->
+
+  <div id="personas" class="tab-content">
+    <h2 class="t-title">PERSONAS</h2>
+    <div class="search-container">
+      <input type="text" id="search-input6" placeholder="Buscar...">
+    </div>
+    <table id="personas-table" class="data-table">
+      <thead>
+        <tr>
+          <th>Cédula</th>
+          <th>Nombre</th>
+          <th>Número de equipos prestados</th>
+          <th>Equipos prestados</th>
+        </tr>
+      </thead>
+      <tbody class="data">
+        <!-- Aquí se agregarán las filas dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="search-container">
+        <input type="text" id="search-input7" placeholder="Buscar...">
+      </div>
+      <div id="equipos-container"></div>
+    </div>
+  </div>
+  <!--Eventos-Persona-->
+
+
+
+
+
+
+
+
+
+  <!---Almacenamiento-->
+  <div id="modal_info" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="resultado" class="almacen"></div>
+    </div>
+  </div>
+
+
+
+
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+    <span class="close" id="closeModal" style="display: none;">&times;</span>
+      <form id="editForm">
+        <h3 class="t-title" class="edit-title" >Editar Equipo</h3>
+        <div>
+          <label for="editedNombre" class="edit-name">Nuevo Nombre:</label>
+          <input type="text" id="editedNombre" required >
+        </div>
+        <div>
+          <label for="editedCedula" class="edit-CC">Nueva Cédula:</label>
+          <input type="text" id="editedCedula" required>
+        </div>
+        <div>
+          <label for="editedEquipo" class="edit-EQUIPO">Ficha:</label>
+          <input type="text" id="editedEquipo" required>
+        </div>
+        <div>
+          <button type="button" id="cancelEditBtn">Cancelar</button>
+          <button type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <footer  class="footer">
+    <div class="footer-content">
+      <a href="https://jeilercontacto.000webhostapp.com/" class="footer-name" target="_blank" >dev Jeiler David</a>
+    </div>
+  </footer>
+
+
+  <script src="./data/script.js"></script>
+
+
+
+
+
+
+<!--Estilos de pantalla de carga-->
+<style>
+
+#loading h1{
+font-size: 10px;
+}
+#loading {
+      background-color: #ffffff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+}
+
+.custom-loader {
+    border: 16px solid #272727; /* Light grey */
+    border-top: 16px solid #6ac753; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+<!--Estilos de pantalla de carga-->
+
+
+</body>
+</html>

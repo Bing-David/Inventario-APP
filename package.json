@@ -1,0 +1,51 @@
+{
+  "name": "app-inventario",
+  "version": "1.0.0",
+  "description": "Aplicativo desarrollado por JEILER",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js",
+    "build":"electron-builder"
+  },
+
+
+
+"build":{
+"appId": "Inventario",
+"win":{
+  "target": [
+    "nsis"
+  ],
+  "icon": "icon.ico"
+}
+},
+"nsis":{
+  "oneClick": false,
+  "installerIcon": "icon.ico",
+  "uinstallerIcon": "icon.ico",
+  "uinstallDisplayName":"Inventario-uninstaller",
+  "license": "license.md",
+  "allowToInstallationDirectory": true,
+  "createDesktopShortcut": true, 
+  "createStartMenuShortcut": true, 
+  "shortcutName": "Inventario"
+},
+
+
+
+
+  "keywords": [],
+  "author": "Dev Jeiler",
+  "license": "ISC",
+  "dependencies": {
+    "electron-dialog": "^2.0.0",
+    "electron": "^27.1.0"
+  },
+  "devDependencies": {
+    "electron": "^27.1.0",
+    "electron-builder": "^24.6.4",
+    "electron-reload": "^2.0.0-alpha.1",
+    "nodemon": "^3.0.1"
+  }
+}

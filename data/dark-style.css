@@ -1,0 +1,108 @@
+*{
+    transition:0.4s;
+}
+
+
+  
+  .dark-cuerpo {
+    background-color: #1a1818;
+  }
+  
+  
+
+.dark-title {
+    background-image: linear-gradient(45deg, #155c05af, #40e218,#31b112da);
+    background-size: 300% 300%;
+    animation: gradientAnimation 10000ms ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
+
+.dark-tab-button.active{
+    color: #000000;
+    background-color: #6ac753;
+    box-shadow: 3px 3px 0px #f5f5fa;
+}
+
+.dark-filtro{
+  box-shadow: 3px 3px 0px #f5f5fa;
+  
+}
+
+.dark-t-title{
+    color: #f5f5fa;
+}
+
+
+
+.dark-form-container{
+    box-shadow:5px 5px 0px #f5f5fa;
+
+}
+.dark-form-container, .dark-form-container h3,.dark-form-container label,.dark-form-container button{
+    background-color: #181818;
+    color: f5f5fa;
+
+}
+
+.dark-data-table td,.dark-data-table th{
+    color: f5f5fa;
+}
+
+.dark-modal-content{
+    background-color: #161616fd;
+
+}
+
+.dark-modal-content tr{
+    color: red;
+}
+
+
+.dark-close{
+    color: #6ac753;
+}
+
+.dark-modal-content div ul{
+    background-color:#161616da;
+    box-shadow:5px 5px 0px #f5f5fa;
+}
+
+.dark-modal-content strong{
+    color: #6ac753;
+
+}
+
+.dark-almace, span {
+    color: whitesmoke;
+}
+
+.dark-prestar-btn button{
+  box-shadow:5px 5px 10px #f5f5fa;
+
+}
+
+
+.dark-edit-btn,.dark-delete-btn,.dark-return-btn{
+  box-shadow:4px 2px 1px #6ac753;
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+.dark-edit-title,.dark-edit-name,.dark-edit-CC,.dark-edit-EQUIPO{
+  color: #f5f5fa;
+} 
